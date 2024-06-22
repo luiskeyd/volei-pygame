@@ -10,7 +10,7 @@ largura = 840
 altura = 680
 
 tela = pygame.display.set_mode((largura,altura))
-pygame.display.set_caption('Jogo')
+pygame.display.set_caption('Jogo Vôlei ')
 
 while True:
     for event in pygame.event.get():
