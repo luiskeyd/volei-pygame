@@ -13,6 +13,9 @@ relogio=pygame.time.Clock()
 #Cores
 PRETO=(0,0,0)
 BRANCO=(255,255,255)
+AZUL = (0,0,255)
+VERMELHO = (255,0,0)
+VERDE = (0,255,0)
 
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption('Jogo Vôlei ')
