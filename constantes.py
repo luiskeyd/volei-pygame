@@ -3,7 +3,7 @@ LARGURA = 840
 ALTURA = 580
 
 #Titulo do Jogo
-Titulo_Jogo="Voleiball"
+TITULO_DO_JOGO="Voleiball"
 
 #Cores
 PRETO=(0,0,0)
@@ -23,3 +23,6 @@ VELOCIDADE_ATAQUE = 8
 
 #frames
 FPS=30
+
+#fonte
+FONTE='arial'

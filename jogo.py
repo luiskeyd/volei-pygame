@@ -1,24 +1,30 @@
 import pygame
 import constantes #pasta onde estarão as variaveis
 import sprites #imagens do jogo 
-#from pygame.locals import *
-#from sys import exit
+import os
+
+
 
 # Inicializando o Pygame
 class Jogo:
+
     def __init__(self):
         #criando a tela do jogo
         pygame.init() 
         pygame.mixer.init()
         self.tela = pygame.display.set_mode((constantes.LARGURA, constantes.ALTURA))
-        pygame.display.set_caption(constantes.Titulo_Jogo)
+        pygame.display.set_caption(constantes.TITULO_DO_JOGO)
         self.relogio = pygame.time.Clock()
         self.esta_rodando = True
+        self.fonte=pygame.font.match_font(constantes.FONTE)
+        self.carregar_arquivos()
     
+
     def novo_jogo(self):
         #inicializacao das sprites
         self.todas_as_sprites= pygame.sprite.Group()
         self.rodar()
+
 
     def rodar(self):
         #loop do jogo
@@ -29,6 +35,7 @@ class Jogo:
             self.atualizar_sprites()
             self.desenhar_sprites()
     
+
     def eventos(self):
         #define os eventos do jogo
         for event in pygame.event.get():
@@ -37,9 +44,11 @@ class Jogo:
                     self.jogando=False
                 self.esta_rodando=False
     
+
     def atualizar_sprites(self):
         #atualiza sprites
         self.todas_as_sprites.update()
+
 
     def desenhar_sprites(self):
         #desenha as sprites
@@ -47,8 +56,54 @@ class Jogo:
         self.todas_as_sprites.draw(self.tela) #faz oq a função fala
         pygame.display.flip() # atuliza a tela a cada frame
 
+
+    def carregar_arquivos(self):
+        #Carregar os arquivos de audio e imagem
+        diretorio_imagens = os.path.join(os.getcwd(), 'imagens')
+        self.diretorio_audios = os.path.join(os.getcwd(), 'audios')
+        self.jogo_python = os.path.join(diretorio_imagens,'imagem_de_fundo.png' )
+
+
+    def mostrar_texto(self, mensagem, tamanho, cor, x, y):
+        #Exibe um texto na tela
+        fonte=pygame.font.Font(self.fonte, tamanho)
+        mensagem = fonte.render(mensagem, False, cor)
+        mensagem_rect=mensagem.get_rect()
+        mensagem_rect.midtop=(x,y)
+        self.tela.blit(mensagem, mensagem_rect)
+
+
     def mostrar_tela_inicial(self):
-        pass
+       #exibe imagem de fundo
+       self.imagem_de_fundo(constantes.LARGURA//2, constantes.ALTURA//2)
+
+       #exibe o texto da tela inicial
+       self.mostrar_texto('Pressione espaço para jogar', 32,constantes.BRANCO, constantes.LARGURA//2, constantes.ALTURA//2)
+
+       pygame.display.flip()
+       self.esperar_resposta()
+    
+
+    def esperar_resposta(self):
+        esperando=True
+        while esperando:
+            self.relogio.tick(constantes.FPS)
+            for event in pygame.event.get():
+                if event.type==pygame.QUIT:
+                    esperando=False
+                    self.esta_rodando=False
+                if event.type==pygame.KEYDOWN:
+                    if event.key==pygame.K_SPACE:
+                        esperando=False
+
+    def imagem_de_fundo(self,x, y):
+        self.imagem_inicial = pygame.image.load('imagens/imagem_de_fundo.png')
+        self.imagem_inicial = pygame.transform.scale(self.imagem_inicial, (constantes.LARGURA, constantes.ALTURA))
+        self.rect = self.imagem_inicial.get_rect()
+        self.rect.topleft = (0, 0)
+        self.tela.blit(self.imagem_inicial, self.rect)
+
+
     def mostrar_tela_final(self):
         pass
 
@@ -111,18 +166,3 @@ volei.mostrar_tela_inicial()
 while volei.esta_rodando:
     volei.novo_jogo()
     volei.mostrar_tela_final()
-    
-    #for event in pygame.event.get():
-        #if event.type == QUIT:
-            #pygame.quit()
-            #exit()
-        #if event.type==KEYDOWN:
-            #jogador1.andar()
-
-
-    
-    #self.todas_as_sprites.draw(tela)
-    #self.todas_as_sprites.update()
-
-        
-    #pygame.display.flip()        
