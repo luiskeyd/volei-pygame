@@ -9,7 +9,7 @@ pygame.init()
 
 # Configurações da Tela
 largura = 840
-altura = 680
+altura = 580
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption('Jogo Vôlei ')
 pygame.display.set_caption('Sprites')
@@ -45,7 +45,7 @@ class Jogador(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,(32*4,32*4))
 
         self.rect=self.image.get_rect()
-        self.rect.topleft=100, 100
+        self.rect.topleft=100, 400
 
         self.animar=False
 
