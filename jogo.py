@@ -105,15 +105,13 @@ class Jogador(pygame.sprite.Sprite):
 '''
 
 
-g = Jogo()
-g.mostrar_tela_inicial()
+volei = Jogo()
+volei.mostrar_tela_inicial()
 
-while g.esta_rodando:
-    g.novo_jogo()
-    g.mostrar_tela_final()
-
-    #self.relogio.tick(constantes.FPS)
-    #self.tela.fill(constantes.BRANCO)
+while volei.esta_rodando:
+    volei.novo_jogo()
+    volei.mostrar_tela_final()
+    
     #for event in pygame.event.get():
         #if event.type == QUIT:
             #pygame.quit()
