@@ -33,6 +33,18 @@ FORCA_DE_ATAQUE = -6
 VELOCIDADE_BOLA = 6
 VELOCIDADE_ATAQUE = 8
 
+# Fonte para usar nos textos
+fonte_maior = pygame.font.Font(None, 74)
+fonte_menor = pygame.font.Font(None, 36)
+
+# como o jogo se comporta
+placar_jogador1 = 0
+placar_jogador2 = 0
+mensagem_ganhador = None
+ativaçao_jogo = True
+tempo_tela_mensagem = 0
+pergunta_final = False 
+
 class Jogador(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -45,7 +57,7 @@ class Jogador(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,(32*4,32*4))
 
         self.rect=self.image.get_rect()
-        self.rect.topleft=100, 400
+        self.rect.topleft = 100, 400
 
         self.animar=False
 
@@ -83,7 +95,5 @@ while True:
     todas_as_sprites.draw(tela)
     todas_as_sprites.update()
 
-    #pygame.draw.rect(tela, (255,0,0), (200,300,40,50))  
-    #pygame.draw.circle(tela, (0,255,0), (300,250), 40)  
-    #pygame.draw.line(tela, (255,255,0), (390,0), (390,600), 5)    
+        
     pygame.display.flip()        
