@@ -63,7 +63,7 @@ while True:
             pygame.quit()
             exit()
         if event.type==KEYDOWN:
-            jogador1.andar
+            jogador1.andar()
 
     todas_as_sprites.draw(tela)
     todas_as_sprites.update()
