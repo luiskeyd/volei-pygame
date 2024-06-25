@@ -4,19 +4,34 @@ import sprites #imagens do jogo
 from pygame.locals import *
 from sys import exit
 
+# Inicializando o Pygame
 pygame.init() 
 
+# Configurações da Tela
 largura = 840
-altura = 680
-relogio=pygame.time.Clock()
+altura = 580
+tela = pygame.display.set_mode((largura,altura))
+pygame.display.set_caption('Jogo Vôlei ')
+pygame.display.set_caption('Sprites')
+
+# Configurações do Relógio
+relogio = pygame.time.Clock()
+FPS = (60)
 
 #Cores
 PRETO=(0,0,0)
 BRANCO=(255,255,255)
+AZUL = (0,0,255)
+VERMELHO = (255,0,0)
+VERDE = (0,255,0)
+CINZA = (200,200,200)
 
-tela = pygame.display.set_mode((largura,altura))
-pygame.display.set_caption('Jogo Vôlei ')
-pygame.display.set_caption('Sprites')
+# Física do Jogo
+GRAVIDADE = 0.2
+ALTURA_DO_SALTO = -9
+FORCA_DE_ATAQUE = -6
+VELOCIDADE_BOLA = 6
+VELOCIDADE_ATAQUE = 8
 
 class Jogador(pygame.sprite.Sprite):
     def __init__(self):
@@ -30,7 +45,7 @@ class Jogador(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,(32*4,32*4))
 
         self.rect=self.image.get_rect()
-        self.rect.topleft=100, 100
+        self.rect.topleft=100, 400
 
         self.animar=False
 
