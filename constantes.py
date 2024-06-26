@@ -23,7 +23,11 @@ VELOCIDADE_BOLA = 6
 VELOCIDADE_ATAQUE = 8
 
 #frames
+<<<<<<< HEAD
 FPS = 30
+=======
+FPS = 60
+>>>>>>> 55b8f052e6f5d1e792e4480d9c924c57f0555ab8
 
 #fonte
 FONTE = 'arial'
