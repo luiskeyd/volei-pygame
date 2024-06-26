@@ -63,7 +63,6 @@ class Jogo:
         self.imagem_de_game_play()# desenha a tela de funda da game play
         self.rede() # desenha a rede
         self.todas_as_sprites.draw(self.tela) #faz oq a função fala
-        self.bola()
         pygame.display.flip() # atualiza a tela a cada frame
 
 
@@ -136,9 +135,9 @@ class Jogo:
 #pergunta_final = False 
 
 class Jogador(pygame.sprite.Sprite):
-    def __init__(self, jogador_id):
+    def __init__(self, player):
         pygame.sprite.Sprite.__init__(self)
-        if jogador_id == 1:
+        if player == 1:
             self.sprites = []
             
             self.sprites.append(pygame.image.load('imagens/jogador1_andando.1.png'))
@@ -186,11 +185,11 @@ class Bola(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
 
-        self.sprite(pygame.image.load('imagens/bola mikasa (1).png'))
-        self.image = self.sprite()
-        self.image = pygame.transform.scale(self.image,(32*2,32*2))
+        self.sprite = (pygame.image.load('imagens/bola mikasa (1).png'))
+        self.image = self.sprite
+        self.image = pygame.transform.scale(self.image,(50,50))
         self.rect= self.image.get_rect()
-        self.rect.topleft = constantes.LARGURA//2, 300
+        self.rect.midtop = (constantes.LARGURA//2, 250)
     
 
 
