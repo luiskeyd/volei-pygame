@@ -38,6 +38,7 @@ class Jogo:
             self.eventos()
             self.atualizar_sprites()
             self.desenhar_sprites()
+
     
 
     def eventos(self):
@@ -57,6 +58,8 @@ class Jogo:
     def desenhar_sprites(self):
         #desenha as sprites
         self.tela.fill(constantes.PRETO) # limpa a tela
+        self.imagem_de_game_play()# desenha a tela de funda da game play
+        self.rede() # desenha a rede
         self.todas_as_sprites.draw(self.tela) #faz oq a função fala
         pygame.display.flip() # atuliza a tela a cada frame
 
@@ -107,6 +110,17 @@ class Jogo:
         self.rect.topleft = (0, 0)
         self.tela.blit(self.imagem_inicial, self.rect)
 
+    def rede(self):
+        pygame.draw.rect(self.tela, constantes.AZUL, [constantes.LARGURA//2 ,320  , 10, constantes.TAMANHO_REDE], 0 )
+
+    def imagem_de_game_play(self):
+        self.imagem_gameplay = pygame.image.load('imagens/imagem_de_gameplay.png')
+        self.imagem_gameplay = pygame.transform.scale(self.imagem_gameplay, (constantes.LARGURA, constantes.ALTURA))
+        self.rect = self.imagem_gameplay.get_rect()
+        self.rect.topleft = (0, 0)
+        self.tela.blit(self.imagem_gameplay, self.rect)
+
+
 
     def mostrar_tela_final(self):
         pass
@@ -133,7 +147,7 @@ class Jogador(pygame.sprite.Sprite):
             self.image = self.sprites[self.atual]
             self.image = pygame.transform.scale(self.image,(32*4,32*4))
             self.rect= self.image.get_rect()
-            self.rect.topleft = 100, 400
+            self.rect.topleft = 100, 430
             self.animar= False
         else: 
             self.sprites = []
@@ -146,7 +160,7 @@ class Jogador(pygame.sprite.Sprite):
             self.image = self.sprites[self.atual]
             self.image = pygame.transform.scale(self.image,(32*4, 32*4))
             self.rect = self.image.get_rect()
-            self.rect.topleft = 620, 400
+            self.rect.topleft = 620, 430
             self.animar = False
 
 
@@ -165,6 +179,20 @@ class Jogador(pygame.sprite.Sprite):
 
 
 
+class Bola(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.sprite(pygame.image.load('imagens/bola mikasa (1).png'))
+        self.image = self.sprite
+        self.image = pygame.transform.scale(self.image,(32*2,32*2))
+        self.rect= self.image.get_rect()
+        self.rect.topleft = constantes.LARGURA//2, 300
+    
+
+
+
+
 
 
 volei = Jogo()
@@ -173,4 +201,3 @@ volei.mostrar_tela_inicial()
 while volei.esta_rodando:
     volei.novo_jogo()
     volei.mostrar_tela_final()
-    

@@ -1,7 +1,8 @@
 import pygame
-import constantes # pasta onde estarão as variáveis
-import sprites # imagens do jogo 
+import constantes  # pasta onde estarão as variáveis
+import sprites  # imagens do jogo 
 import os
+
 
 # Inicializando o Pygame
 class Jogo:
@@ -22,8 +23,10 @@ class Jogo:
         self.todas_as_sprites = pygame.sprite.Group()
         self.jogador1 = Jogador(1)
         self.jogador2 = Jogador(2)
+        self.bola = Bola()
         self.todas_as_sprites.add(self.jogador1)
         self.todas_as_sprites.add(self.jogador2)
+        self.todas_as_sprites.add(self.bola)
         self.rodar()
 
     def rodar(self):
@@ -49,15 +52,17 @@ class Jogo:
 
     def desenhar_sprites(self):
         # desenha as sprites
-        self.tela.blit(self.imagem_inicial, self.rect)  # desenha a imagem de fundo
+        self.tela.fill(constantes.PRETO)  # limpa a tela
+        self.imagem_de_fundo()  # desenha a imagem de fundo
+        self.rede()  # desenha a rede
         self.todas_as_sprites.draw(self.tela)  # desenha as sprites na tela
         pygame.display.flip()  # atualiza a tela a cada frame
 
     def carregar_arquivos(self):
         # Carregar os arquivos de áudio e imagem
         diretorio_imagens = os.path.join(os.getcwd(), 'imagens')
+        self.imagem_fundo = os.path.join(diretorio_imagens, 'imagem_de_fundo.png')
         self.diretorio_audios = os.path.join(os.getcwd(), 'audios')
-        self.jogo_python = os.path.join(diretorio_imagens, 'imagem_de_fundo.png')
 
     def mostrar_texto(self, mensagem, tamanho, cor, x, y):
         # Exibe um texto na tela
@@ -90,14 +95,18 @@ class Jogo:
                         esperando = False
 
     def imagem_de_fundo(self):
-        self.imagem_inicial = pygame.image.load(self.jogo_python)
+        self.imagem_inicial = pygame.image.load(self.imagem_fundo)
         self.imagem_inicial = pygame.transform.scale(self.imagem_inicial, (constantes.LARGURA, constantes.ALTURA))
         self.rect = self.imagem_inicial.get_rect()
         self.rect.topleft = (0, 0)
         self.tela.blit(self.imagem_inicial, self.rect)
 
+    def rede(self):
+        pygame.draw.rect(self.tela, constantes.VERDE, (constantes.LARGURA//2 - 5, 0, 10, constantes.TAMANHO_REDE))
+
     def mostrar_tela_final(self):
         pass
+
 
 class Jogador(pygame.sprite.Sprite):
     def __init__(self, jogador_id):
@@ -110,7 +119,7 @@ class Jogador(pygame.sprite.Sprite):
             self.sprites.append(pygame.image.load('imagens/jogador1_andando.4.png'))
             self.atual = 0
             self.image = self.sprites[self.atual]
-            self.image = pygame.transform.scale(self.image, (32*4, 32*4))
+            self.image = pygame.transform.scale(self.image, (32 * 4, 32 * 4))
             self.rect = self.image.get_rect()
             self.rect.topleft = 100, 400
             self.animar = False
@@ -122,9 +131,9 @@ class Jogador(pygame.sprite.Sprite):
             self.sprites.append(pygame.image.load('imagens/jogador2_andando.4 (1).png'))
             self.atual = 0
             self.image = self.sprites[self.atual]
-            self.image = pygame.transform.scale(self.image, (32*4, 32*4))
+            self.image = pygame.transform.scale(self.image, (32 * 4, 32 * 4))
             self.rect = self.image.get_rect()
-            self.rect.topleft = 600, 400
+            self.rect.topleft = 620, 400
             self.animar = False
 
     def update(self):
@@ -134,10 +143,21 @@ class Jogador(pygame.sprite.Sprite):
                 self.atual = 0
                 self.animar = False
             self.image = self.sprites[int(self.atual)]
-            self.image = pygame.transform.scale(self.image, (32*4, 32*4))
+            self.image = pygame.transform.scale(self.image, (32 * 4, 32 * 4))
 
     def andar(self):
         self.animar = True
+
+
+class Bola(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprite = pygame.image.load('imagens/bola mikasa (1).png')
+        self.image = self.sprite
+        self.image = pygame.transform.scale(self.image, (32 * 2, 32 * 2))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = constantes.LARGURA // 2, 300
+
 
 volei = Jogo()
 volei.mostrar_tela_inicial()
