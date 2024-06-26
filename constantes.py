@@ -23,11 +23,14 @@ VELOCIDADE_BOLA = 6
 VELOCIDADE_ATAQUE = 8
 
 #frames
-FPS = 60
+FPS = 30
 
 #posiçao dos jogadores
 X_JOGADOR1 = 100
-Y_JOGADOR1 = 430 
+Y_JOGADOR1 = 430
+
+X_JOGADOR2 = 620
+Y_JOGADOR2 = 430
 
 #fonte
 FONTE = 'arial'

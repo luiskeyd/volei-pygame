@@ -10,34 +10,38 @@ class Jogo:
 
     def __init__(self):
         #criando a tela do jogo
-        pygame.init() 
-        pygame.mixer.init()
+        pygame.init() # iniciando o jogo
+        pygame.mixer.init() # musica pro jogo
         self.tela = pygame.display.set_mode((constantes.LARGURA, constantes.ALTURA))
         pygame.display.set_caption(constantes.TITULO_DO_JOGO)
-        self.relogio = pygame.time.Clock()
-        self.esta_rodando = True
+        self.relogio = pygame.time.Clock() # fps do jogo
+        self.esta_rodando = True # jogo aberto
         self.fonte=pygame.font.match_font(constantes.FONTE)
         self.carregar_arquivos()
     
 
     def novo_jogo(self):
         #inicializacao das sprites
-        self.todas_as_sprites = pygame.sprite.Group()
-        self.jogador1 = Jogador(1)
-        self.jogador2 = Jogador(2)
-        self.bola = Bola()
+        self.todas_as_sprites = pygame.sprite.Group() # carrega todas as sprites
+        self.jogador1 = Jogador(1) # sprites do jogador 1
+        self.jogador2 = Jogador(2) # sprites do jogador 2
+        self.bola = Bola() # sprite da bola
         self.todas_as_sprites.add(self.bola)
         self.todas_as_sprites.add(self.jogador1)
-        self.todas_as_sprites.add(self.jogador2)
+        self.todas_as_sprites.add(self.jogador2) # add de todas as sprites na lista
         self.rodar()
 
 
     def rodar(self):
         #loop do jogo
-        self.jogando = True
-        while self.jogando:
+        self.jogando = True 
+        while self.jogando: #inicializa o loop
             self.relogio.tick(constantes.FPS)
             self.eventos()
+            self.jogador1.movimento(1)
+            self.jogador1.andar()
+            self.jogador2.movimento(2)
+            self.jogador2.andar()
             self.atualizar_sprites()
             self.desenhar_sprites()
 
@@ -48,9 +52,10 @@ class Jogo:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: #caso o player feche o jogo
                 if self.jogando:
-                    self.jogando = False
+                    self.jogando = False 
                 self.esta_rodando = False
-    
+            
+            
 
     def atualizar_sprites(self):
         #atualiza sprites
@@ -151,6 +156,9 @@ class Jogador(pygame.sprite.Sprite):
             self.rect= self.image.get_rect()
             self.rect.topleft = constantes.X_JOGADOR1, constantes.Y_JOGADOR1           
             self.animar= False
+            self.posicao_x1 = constantes.X_JOGADOR1
+            self.rect.x = self.posicao_x1
+
         else: 
             self.sprites = []
             self.sprites.append(pygame.image.load('imagens/jogador2_andando.1 (1).png'))
@@ -164,8 +172,23 @@ class Jogador(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.topleft = 620, 430
             self.animar = False
+            self.posicao_x2 = constantes.X_JOGADOR2
+            self.rect.x = self.posicao_x2
+            
+    def movimento(self, esquerda):
+        teclas_pressionadas = pygame.key.get_pressed()
+        if esquerda ==1:
+            if teclas_pressionadas[pygame.K_d]:
+                self.rect.x +=5
+            if teclas_pressionadas[pygame.K_a]:
+                self.rect.x -=5
+        else:
+            if teclas_pressionadas[pygame.K_RIGHT]:
+                self.rect.x +=5
+            if teclas_pressionadas[pygame.K_LEFT]:
+                self.rect.x -=5
 
-
+        
     def update(self):
         if self.animar==True:
             self.atual= self.atual+ 0.2
