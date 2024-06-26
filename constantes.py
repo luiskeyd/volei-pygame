@@ -25,6 +25,9 @@ VELOCIDADE_ATAQUE = 8
 #frames
 FPS = 60
 
+#posiçao dos jogadores
+X_JOGADOR1 = 100
+Y_JOGADOR1 = 430 
 
 #fonte
 FONTE = 'arial'
@@ -38,7 +41,7 @@ PLACAR_JOGADOR1 = 0
 PLACAR_JOGADOR2 = 0
 
 #tamanho da rede
-TAMANHO_REDE = 260
+TAMANHO_REDE = 250
 
 
 #mensagem_ganhador = None
