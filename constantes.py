@@ -45,6 +45,7 @@ PLACAR_JOGADOR2 = 0
 
 #tamanho da rede
 TAMANHO_REDE = 250
+LARGURA_REDE = 10
 
 
 #mensagem_ganhador = None
