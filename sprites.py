@@ -1,6 +1,9 @@
 # sprite da bola
 BOLA = 'imagens/bola mikasa (1).png'
 
+# sprite barrio
+BARRIO ='imagens/barrio.png'
+
 # sprites do jogador 1
 J1_FRAME_1 = 'imagens/jogador1_andando.1 (1).png'
 J1_FRAME_2 = 'imagens/jogador1_andando.2 (1).png'

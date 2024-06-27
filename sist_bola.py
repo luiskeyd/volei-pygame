@@ -14,3 +14,6 @@ class Bola(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,(50,50))
         self.rect= self.image.get_rect()
         self.rect.midtop = (constantes.LARGURA//2, 250)
+    
+    def movimento_bola(self):
+        oi_tudo_bem = 8
