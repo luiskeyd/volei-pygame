@@ -4,6 +4,7 @@ import sprites #imagens do jogo
 import os # arquivos
 import sist_players
 import sist_bola
+import sist_rede
 
 
 
@@ -25,9 +26,12 @@ class Jogo:
     def novo_jogo(self):
         #inicializacao das sprites
         self.todas_as_sprites = pygame.sprite.Group() # carrega todas as sprites
+        self.rede_sprite = pygame.sprite.Group()
         self.jogador1 = sist_players.Jogador(1) # sprites do jogador 1
         self.jogador2 = sist_players.Jogador(2) # sprites do jogador 2
         self.bola = sist_bola.Bola() # sprite da bola
+        self.rede = sist_rede.Rede(constantes.AZUL,10, constantes.TAMANHO_REDE, (constantes.LARGURA//2, 320))
+        self.rede_sprite.add(self.rede)
         self.todas_as_sprites.add(self.bola)
         self.todas_as_sprites.add(self.jogador1)
         self.todas_as_sprites.add(self.jogador2) # add de todas as sprites na lista
@@ -53,8 +57,7 @@ class Jogo:
                     self.jogando = False 
                     self.esta_rodando = False
             
-            
-
+        
     def atualizar_sprites(self):
         #atualiza sprites
         self.todas_as_sprites.update()
@@ -68,7 +71,7 @@ class Jogo:
         #desenha as sprites
         self.tela.fill(constantes.PRETO) # limpa a tela
         self.imagem_de_game_play()# desenha a tela de funda da game play
-        self.rede() # desenha a rede
+        self.rede_sprite.draw(self.tela) # desenha a rede
         self.todas_as_sprites.draw(self.tela) #faz oq a função fala
         pygame.display.flip() # atualiza a tela a cada frame
 
