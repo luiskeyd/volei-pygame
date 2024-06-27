@@ -19,7 +19,7 @@ class Jogo:
         pygame.display.set_caption(constantes.TITULO_DO_JOGO)
         self.relogio = pygame.time.Clock() # fps do jogo
         self.esta_rodando = True # jogo aberto
-        self.fonte=pygame.font.match_font(constantes.FONTE)
+        self.fonte = pygame.font.match_font(constantes.FONTE)
         self.carregar_arquivos()
     
 
@@ -46,6 +46,7 @@ class Jogo:
             self.eventos()
             self.jogador1.movimento(1)
             self.jogador2.movimento(2)
+            self.jogador1.pular(1)
             self.atualizar_sprites()
             self.desenhar_sprites()
 
@@ -61,10 +62,11 @@ class Jogo:
     def atualizar_sprites(self):
         #atualiza sprites
         self.todas_as_sprites.update()
-        # sistema de colisao
+        #sistema de colisao
         self.jogador1.colide(self.rede_sprite)
         self.jogador2.colide(self.rede_sprite)
-
+        #sistema de salto
+        self.jogador1.pular(1)
 
 
     def desenhar_sprites(self):
@@ -85,10 +87,10 @@ class Jogo:
 
     def mostrar_texto(self, mensagem, tamanho, cor, x, y):
         #definicao do texto na tela
-        fonte=pygame.font.Font(self.fonte, tamanho)
+        fonte = pygame.font.Font(self.fonte, tamanho)
         mensagem = fonte.render(mensagem, False, cor)
-        mensagem_rect=mensagem.get_rect()
-        mensagem_rect.midtop=(x,y)
+        mensagem_rect = mensagem.get_rect()
+        mensagem_rect.midtop = (x,y)
         self.tela.blit(mensagem, mensagem_rect)
 
 

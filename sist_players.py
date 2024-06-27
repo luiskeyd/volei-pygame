@@ -19,11 +19,11 @@ class Jogador(pygame.sprite.Sprite):
             self.atual = 0
             self.image = self.sprites[self.atual]
             self.image = pygame.transform.scale(self.image,(120,120))
-            self.rect= self.image.get_rect()
+            self.rect = self.image.get_rect()
             self.rect.topleft = constantes.X_JOGADOR1, constantes.Y_JOGADOR1           
-            self.animar=False
+            self.animar = False           
             self.posicao_x1 = constantes.X_JOGADOR1
-            self.rect.x = self.posicao_x1
+            self.rect.x = self.posicao_x1            
 
         else: 
             self.sprites = []
@@ -40,6 +40,12 @@ class Jogador(pygame.sprite.Sprite):
             self.animar = False
             self.posicao_x2 = constantes.X_JOGADOR2
             self.rect.x = self.posicao_x2
+
+        self.gravidade = 1
+        self.altura_salto = 20
+        self.y_velocidade = 20 
+        self.pulando = False 
+        #self.rect.y = constantes.Y_JOGADOR1 
             
     def movimento(self, player):
         teclas_pressionadas = pygame.key.get_pressed()
@@ -65,15 +71,19 @@ class Jogador(pygame.sprite.Sprite):
 
 
         
-    def update(self,):
-            # atualiza as sprites caso os jogadores se movam
-            if self.animar==True:
-                self.atual= self.atual+ 0.2
+    def update(self):
+            #if self.pular == True:
+                #self.rect.y -= 20
+            # atualiza as sprites caso os jogadores se movam            
+            if self.animar == True:
+                self.atual = self.atual + 0.2
                 if self.atual>= len(self.sprites):
                     self.atual = 0
                     self.animar=False
                 self.image= self.sprites[int(self.atual)]
                 self.image = pygame.transform.scale(self.image,(120,120))
+            self.pular(1)
+                
 
     
     def andar(self, player):
@@ -94,8 +104,14 @@ class Jogador(pygame.sprite.Sprite):
         pressionado = pygame.key.get_pressed()
         if player == 1:
             if pressionado[pygame.K_w]:
-                constantes.PULANDO = True
-            if constantes.PULANDO:
-                constantes.Y_JOGADOR1 -= constantes.Y_VELOCIDADE
-                constantes.Y_VELOCIDADE -= constantes.Y_GRAVIDADE 
-                if constantes.Y_VELOCIDADE                
+                self.pulando = True               
+            if self.pulando:               
+                self.rect.y -= self.y_velocidade
+                self.y_velocidade -= self.gravidade
+                if self.y_velocidade < -self.altura_salto:
+                    self.pulando = False
+                    self.y_velocidade = self.altura_salto                  
+                                  
+
+    
+        
