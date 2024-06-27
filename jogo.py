@@ -20,7 +20,6 @@ class Jogo:
         self.relogio = pygame.time.Clock() # fps do jogo
         self.esta_rodando = True # jogo aberto
         self.fonte = pygame.font.match_font(constantes.FONTE)
-        self.carregar_arquivos()
     
 
     def novo_jogo(self):
@@ -47,6 +46,9 @@ class Jogo:
             self.jogador1.movimento(1)
             self.jogador2.movimento(2)
             self.jogador1.pular(1)
+            self.jogador2.pular(2)
+            self.jogador1.colide(self.rede_sprite)
+            self.jogador2.colide(self.rede_sprite)
             self.atualizar_sprites()
             self.desenhar_sprites()
 
@@ -62,27 +64,16 @@ class Jogo:
     def atualizar_sprites(self):
         #atualiza sprites
         self.todas_as_sprites.update()
-        #sistema de colisao
-        self.jogador1.colide(self.rede_sprite)
-        self.jogador2.colide(self.rede_sprite)
-        #sistema de salto
-        self.jogador1.pular(1)
-
+        
 
     def desenhar_sprites(self):
         #desenha as sprites
         self.tela.fill(constantes.PRETO) # limpa a tela
         self.imagem_de_game_play()# desenha a tela de funda da game play
+        self.BARRIO() # desenha um 'BARRRRRIIIIIIIIIO'
         self.rede_sprite.draw(self.tela) # desenha a rede
         self.todas_as_sprites.draw(self.tela) #faz oq a função fala
         pygame.display.flip() # atualiza a tela a cada frame
-
-
-    def carregar_arquivos(self):
-        #Carregar os arquivos de audio e imagem
-        diretorio_imagens = os.path.join(os.getcwd(), 'imagens')
-        self.diretorio_audios = os.path.join(os.getcwd(), 'audios')
-        self.jogo_python = os.path.join(diretorio_imagens,'imagem_de_fundo.png' )
 
 
     def mostrar_texto(self, mensagem, tamanho, cor, x, y):
@@ -96,7 +87,7 @@ class Jogo:
 
     def mostrar_tela_inicial(self):
        #exibe imagem de fundo
-       self.imagem_de_fundo(constantes.LARGURA//2, constantes.ALTURA//2)
+       self.imagem_de_fundo()
        #exibe o texto da tela inicial
        self.mostrar_texto('Pressione espaço para jogar', 32,constantes.BRANCO, constantes.LARGURA//2, constantes.ALTURA//2)
        pygame.display.flip()
@@ -115,7 +106,7 @@ class Jogo:
                     if event.key == pygame.K_SPACE:
                         esperando = False
 
-    def imagem_de_fundo(self,x, y):
+    def imagem_de_fundo(self):
         self.imagem_inicial = pygame.image.load(sprites.TELA_INICIAL)
         self.imagem_inicial = pygame.transform.scale(self.imagem_inicial, (constantes.LARGURA, constantes.ALTURA))
         self.rect = self.imagem_inicial.get_rect()
@@ -128,6 +119,14 @@ class Jogo:
         self.rect = self.imagem_gameplay.get_rect()
         self.rect.topleft = (0, 0)
         self.tela.blit(self.imagem_gameplay, self.rect)
+    
+
+    def BARRIO(self):
+        self.barrio = pygame.image.load(sprites.BARRIO)
+        self.barrio = pygame.transform.scale(self.barrio, (70,70))
+        self.rect = self.barrio.get_rect()
+        self.rect.midtop = (50,460)
+        self.tela.blit(self.barrio, self.rect)
 
 
     def mostrar_tela_final(self):
