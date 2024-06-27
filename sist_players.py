@@ -88,3 +88,14 @@ class Jogador(pygame.sprite.Sprite):
                     self.rect.x -= 5
                 if self.rect.colliderect(i):
                     self.rect.x +=10
+
+
+    def pular(self, player):
+        pressionado = pygame.key.get_pressed()
+        if player == 1:
+            if pressionado[pygame.K_w]:
+                constantes.PULANDO = True
+            if constantes.PULANDO:
+                constantes.Y_JOGADOR1 -= constantes.Y_VELOCIDADE
+                constantes.Y_VELOCIDADE -= constantes.Y_GRAVIDADE 
+                if constantes.Y_VELOCIDADE                
