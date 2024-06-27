@@ -11,7 +11,7 @@ class Bola(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.sprite = (pygame.image.load(sprites.BOLA))
         self.image = self.sprite
-        self.image = pygame.transform.scale(self.image,(50,50))
+        self.image = pygame.transform.scale(self.image,(40,40))
         self.rect= self.image.get_rect()
         self.rect.midtop = (constantes.LARGURA//2, 250)
     

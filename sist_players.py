@@ -93,7 +93,7 @@ class Jogador(pygame.sprite.Sprite):
             self.animar=True
     
 
-    def colide(self, rede,bola):
+    def colide(self, rede, bola):
         colisao_rede = pygame.sprite.spritecollide(self, rede, False)
         colisao_bola = pygame.sprite.spritecollide(self, bola, False)
         for i in colisao_rede:
