@@ -54,16 +54,17 @@ class Jogo:
     def eventos(self):
         #define os eventos do jogo
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: #caso o player feche o jogo
-                if self.jogando:
+            #caso o player feche o jogo
+            if event.type == pygame.QUIT: 
                     self.jogando = False 
-                self.esta_rodando = False
+                    self.esta_rodando = False
             
             
 
     def atualizar_sprites(self):
         #atualiza sprites
         self.todas_as_sprites.update()
+        # sistema de colisao
         self.jogador1.colide(self.rede_sprite)
         self.jogador2.colide(self.rede_sprite)
 
@@ -78,7 +79,7 @@ class Jogo:
         pygame.display.flip() # atualiza a tela a cada frame
 
     def mostrar_texto(self, mensagem, tamanho, cor, x, y):
-        #Exibe um texto na tela
+        #definicao do texto na tela
         fonte=pygame.font.Font(self.fonte, tamanho)
         mensagem = fonte.render(mensagem, False, cor)
         mensagem_rect=mensagem.get_rect()
@@ -89,10 +90,8 @@ class Jogo:
     def mostrar_tela_inicial(self):
        #exibe imagem de fundo
        self.imagem_de_fundo(constantes.LARGURA//2, constantes.ALTURA//2)
-
        #exibe o texto da tela inicial
        self.mostrar_texto('Pressione espaço para jogar', 32,constantes.BRANCO, constantes.LARGURA//2, constantes.ALTURA//2)
-
        pygame.display.flip()
        self.esperar_resposta()
     
@@ -115,7 +114,6 @@ class Jogo:
         self.rect = self.imagem_inicial.get_rect()
         self.rect.topleft = (0, 0)
         self.tela.blit(self.imagem_inicial, self.rect)
-        #pygame.sprite.collide_rect(rede, self.jogador1):
 
     def imagem_de_game_play(self):
         self.imagem_gameplay = pygame.image.load(sprites.TELA_DE_GAMEPLAY )
@@ -125,11 +123,11 @@ class Jogo:
         self.tela.blit(self.imagem_gameplay, self.rect)
 
 
-
     def mostrar_tela_final(self):
         pass
 
 
+ 
 
 volei = Jogo()
 volei.mostrar_tela_inicial()

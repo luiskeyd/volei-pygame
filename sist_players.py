@@ -50,7 +50,7 @@ class Jogador(pygame.sprite.Sprite):
             if teclas_pressionadas[pygame.K_a]:
                 self.rect.x -=5
                 self.andar(1)
-            if self.rect.x <= -25:
+            if self.rect.x <= -25: # caso o jogador1 encoste na borda da tela
                 self.rect.x = -25
         else:
             if teclas_pressionadas[pygame.K_RIGHT]:
@@ -59,13 +59,14 @@ class Jogador(pygame.sprite.Sprite):
             if teclas_pressionadas[pygame.K_LEFT]:
                 self.rect.x -=5
                 self.andar(2)
-            if self.rect.x >= constantes.LARGURA - 95:
+            if self.rect.x >= constantes.LARGURA - 95: # caso o jogador2 encoste na borda da tela
                 self.rect.x = constantes.LARGURA - 95
 
 
 
         
-    def update(self):
+    def update(self,):
+            # atualiza as sprites caso os jogadores se movam
             if self.animar==True:
                 self.atual= self.atual+ 0.2
                 if self.atual>= len(self.sprites):

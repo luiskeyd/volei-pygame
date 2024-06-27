@@ -10,7 +10,6 @@ class Rede(pygame.sprite.Sprite):
 
     def __init__(self, cor, largura, altura, posicao):
        super().__init__()
-       #pygame.sprite.Sprite.init(self)
        self.image = pygame.Surface([largura, altura])
        self.image.fill(cor)
        self.rect = self.image.get_rect()
