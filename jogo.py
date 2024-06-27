@@ -183,6 +183,7 @@ class Jogador(pygame.sprite.Sprite):
 
 
 
+
         
     def update(self):
             if self.animar==True:
