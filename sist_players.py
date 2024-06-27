@@ -93,20 +93,23 @@ class Jogador(pygame.sprite.Sprite):
             self.animar=True
     
 
-    def colide(self, rede):
-        colisao = pygame.sprite.spritecollide(self, rede, False)
-        for i in colisao:
+    def colide(self, rede,bola):
+        colisao_rede = pygame.sprite.spritecollide(self, rede, False)
+        colisao_bola = pygame.sprite.spritecollide(self, bola, False)
+        for i in colisao_rede:
                 if self.rect.colliderect(i):
                     self.rect.x -= 5
                 if self.rect.colliderect(i):
                     self.rect.x +=10
+
+        
 
 
     def pular(self, player):
         pressionado = pygame.key.get_pressed()
         if player == 1:
             if pressionado[pygame.K_w]:
-                self.pulando = True               
+                self.pulando = True             
             if self.pulando:               
                 self.rect.y -= self.y_velocidade
                 self.y_velocidade -= self.gravidade

@@ -26,12 +26,14 @@ class Jogo:
         #inicializacao das sprites
         self.todas_as_sprites = pygame.sprite.Group() # carrega todas as sprites
         self.rede_sprite = pygame.sprite.Group()
+        self.bola_sprite = pygame.sprite.Group()
         self.jogador1 = sist_players.Jogador(1) # sprites do jogador 1
         self.jogador2 = sist_players.Jogador(2) # sprites do jogador 2
         self.bola = sist_bola.Bola() # sprite da bola
         self.rede = sist_rede.Rede(constantes.AZUL,10, constantes.TAMANHO_REDE, (constantes.LARGURA//2, 320))
         self.rede_sprite.add(self.rede)
-        self.todas_as_sprites.add(self.bola)
+        self.bola_sprite.add(self.bola)
+        #self.todas_as_sprites.add(self.bola)
         self.todas_as_sprites.add(self.jogador1)
         self.todas_as_sprites.add(self.jogador2) # add de todas as sprites na lista
         self.rodar()
@@ -47,8 +49,8 @@ class Jogo:
             self.jogador2.movimento(2)
             self.jogador1.pular(1)
             self.jogador2.pular(2)
-            self.jogador1.colide(self.rede_sprite)
-            self.jogador2.colide(self.rede_sprite)
+            self.jogador1.colide(self.rede_sprite, self.bola_sprite)
+            self.jogador2.colide(self.rede_sprite, self.bola_sprite)
             self.atualizar_sprites()
             self.desenhar_sprites()
 
@@ -64,13 +66,15 @@ class Jogo:
     def atualizar_sprites(self):
         #atualiza sprites
         self.todas_as_sprites.update()
-        
+
 
     def desenhar_sprites(self):
         #desenha as sprites
         self.tela.fill(constantes.PRETO) # limpa a tela
         self.imagem_de_game_play()# desenha a tela de funda da game play
         self.BARRIO() # desenha um 'BARRRRRIIIIIIIIIO'
+        self.Placar()
+        self.bola_sprite.draw(self.tela)
         self.rede_sprite.draw(self.tela) # desenha a rede
         self.todas_as_sprites.draw(self.tela) #faz oq a função fala
         pygame.display.flip() # atualiza a tela a cada frame
@@ -128,13 +132,22 @@ class Jogo:
         self.rect.midtop = (50,460)
         self.tela.blit(self.barrio, self.rect)
 
+    def Placar(self):
+
+        self.placar_jogador1 = constantes.PLACAR_JOGADOR1 
+        self.placar_jogador2 = constantes.PLACAR_JOGADOR2
+        self.placar_exterior = pygame.draw.rect(self.tela,(constantes.PRETO), [233,50,400,100], 5)
+        self.placar_interior = pygame.draw.rect(self.tela,(constantes.CINZA), [238,54,391,91], 0)
+        self.mostrar_texto('PLACAR',30,constantes.PRETO, 435,60 )
+        self.mostrar_texto(f'{self.placar_jogador1}',45, constantes.VERMELHO,320, 95)
+        self.mostrar_texto(f'{self.placar_jogador2}',45, constantes.VERMELHO,550, 95)
+        
+
 
     def mostrar_tela_final(self):
         pass
 
 
-
- 
 
 volei = Jogo()
 volei.mostrar_tela_inicial()
