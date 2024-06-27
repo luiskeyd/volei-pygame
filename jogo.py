@@ -1,7 +1,7 @@
 import pygame
 import constantes #pasta onde estarão as variaveis
 import sprites #imagens do jogo 
-import os
+import os # arquivos
 
 
 
@@ -10,47 +10,48 @@ class Jogo:
 
     def __init__(self):
         #criando a tela do jogo
-        pygame.init() 
-        pygame.mixer.init()
+        pygame.init() # iniciando o jogo
+        pygame.mixer.init() # musica pro jogo
         self.tela = pygame.display.set_mode((constantes.LARGURA, constantes.ALTURA))
         pygame.display.set_caption(constantes.TITULO_DO_JOGO)
-        self.relogio = pygame.time.Clock()
-        self.esta_rodando = True
+        self.relogio = pygame.time.Clock() # fps do jogo
+        self.esta_rodando = True # jogo aberto
         self.fonte=pygame.font.match_font(constantes.FONTE)
         self.carregar_arquivos()
     
 
     def novo_jogo(self):
         #inicializacao das sprites
-        self.todas_as_sprites = pygame.sprite.Group()
-        self.jogador1 = Jogador(1)
-        self.jogador2 = Jogador(2)
-        self.bola = Bola()
+        self.todas_as_sprites = pygame.sprite.Group() # carrega todas as sprites
+        self.jogador1 = Jogador(1) # sprites do jogador 1
+        self.jogador2 = Jogador(2) # sprites do jogador 2
+        self.bola = Bola() # sprite da bola
         self.todas_as_sprites.add(self.bola)
         self.todas_as_sprites.add(self.jogador1)
-        self.todas_as_sprites.add(self.jogador2)
+        self.todas_as_sprites.add(self.jogador2) # add de todas as sprites na lista
         self.rodar()
 
 
     def rodar(self):
         #loop do jogo
-        self.jogando = True
-        while self.jogando:
+        self.jogando = True 
+        while self.jogando: #inicializa o loop
             self.relogio.tick(constantes.FPS)
             self.eventos()
+            self.jogador1.movimento(1)
+            self.jogador2.movimento(2)
             self.atualizar_sprites()
             self.desenhar_sprites()
-
-    
 
     def eventos(self):
         #define os eventos do jogo
         for event in pygame.event.get():
             if event.type == pygame.QUIT: #caso o player feche o jogo
                 if self.jogando:
-                    self.jogando = False
+                    self.jogando = False 
                 self.esta_rodando = False
-    
+            
+            
 
     def atualizar_sprites(self):
         #atualiza sprites
@@ -106,7 +107,7 @@ class Jogo:
                         esperando = False
 
     def imagem_de_fundo(self,x, y):
-        self.imagem_inicial = pygame.image.load('imagens/imagem_de_fundo.png')
+        self.imagem_inicial = pygame.image.load(sprites.TELA_INICIAL)
         self.imagem_inicial = pygame.transform.scale(self.imagem_inicial, (constantes.LARGURA, constantes.ALTURA))
         self.rect = self.imagem_inicial.get_rect()
         self.rect.topleft = (0, 0)
@@ -116,7 +117,7 @@ class Jogo:
         pygame.draw.rect(self.tela, constantes.AZUL, [constantes.LARGURA//2 ,320  , 10, constantes.TAMANHO_REDE], 0 )
 
     def imagem_de_game_play(self):
-        self.imagem_gameplay = pygame.image.load('imagens/imagem_de_gameplay.png')
+        self.imagem_gameplay = pygame.image.load(sprites.TELA_DE_GAMEPLAY )
         self.imagem_gameplay = pygame.transform.scale(self.imagem_gameplay, (constantes.LARGURA, constantes.ALTURA))
         self.rect = self.imagem_gameplay.get_rect()
         self.rect.topleft = (0, 0)
@@ -127,36 +128,32 @@ class Jogo:
     def mostrar_tela_final(self):
         pass
 
-
-        
-#mensagem_ganhador = None
-#ativaçao_jogo = True
-#tempo_tela_mensagem = 0
-#pergunta_final = False 
-
 class Jogador(pygame.sprite.Sprite):
     def __init__(self, player):
         pygame.sprite.Sprite.__init__(self)
         if player == 1:
             self.sprites = []
             
-            self.sprites.append(pygame.image.load('imagens/jogador1_andando.1.png'))
-            self.sprites.append(pygame.image.load('imagens/jogador1_andando.2.png'))
-            self.sprites.append(pygame.image.load('imagens/jogador1_andando.3.png'))
-            self.sprites.append(pygame.image.load('imagens/jogador1_andando.4.png'))
+            self.sprites.append(pygame.image.load(sprites.J1_FRAME_1))
+            self.sprites.append(pygame.image.load(sprites.J1_FRAME_2))
+            self.sprites.append(pygame.image.load(sprites.J1_FRAME_3))
+            self.sprites.append(pygame.image.load(sprites.J1_FRAME_4))
 
             self.atual = 0
             self.image = self.sprites[self.atual]
             self.image = pygame.transform.scale(self.image,(32*4,32*4))
             self.rect= self.image.get_rect()
             self.rect.topleft = constantes.X_JOGADOR1, constantes.Y_JOGADOR1           
-            self.animar= False
+            self.animar=False
+            self.posicao_x1 = constantes.X_JOGADOR1
+            self.rect.x = self.posicao_x1
+
         else: 
             self.sprites = []
-            self.sprites.append(pygame.image.load('imagens/jogador2_andando.1 (1).png'))
-            self.sprites.append(pygame.image.load('imagens/jogador2_andando.2 (1).png'))
-            self.sprites.append(pygame.image.load('imagens/jogador2_andando.3 (1).png'))
-            self.sprites.append(pygame.image.load('imagens/jogador2_andando.4 (1).png'))
+            self.sprites.append(pygame.image.load(sprites.J2_FRAME_1))
+            self.sprites.append(pygame.image.load(sprites.J2_FRAME_2))
+            self.sprites.append(pygame.image.load(sprites.J2_FRAME_3))
+            self.sprites.append(pygame.image.load(sprites.J2_FRAME_4))
 
             self.atual = 0
             self.image = self.sprites[self.atual]
@@ -164,37 +161,53 @@ class Jogador(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.topleft = 620, 430
             self.animar = False
+            self.posicao_x2 = constantes.X_JOGADOR2
+            self.rect.x = self.posicao_x2
+            
+    def movimento(self, player):
+        teclas_pressionadas = pygame.key.get_pressed()
+        if player == 1:
+            if teclas_pressionadas[pygame.K_d]:
+                self.rect.x +=5
+                self.andar(1)
+            if teclas_pressionadas[pygame.K_a]:
+                self.rect.x -=5
+                self.andar(1)
+        else:
+            if teclas_pressionadas[pygame.K_RIGHT]:
+                self.rect.x +=5
+                self.andar(2)
+            if teclas_pressionadas[pygame.K_LEFT]:
+                self.rect.x -=5
+                self.andar(2)
 
 
+
+        
     def update(self):
-        if self.animar==True:
-            self.atual= self.atual+ 0.2
-            if self.atual>= len(self.sprites):
-                self.atual = 0
-                self.animar=False
-            self.image= self.sprites[int(self.atual)]
-            self.image = pygame.transform.scale(self.image,(32*4,32*4))
+            if self.animar==True:
+                self.atual= self.atual+ 0.2
+                if self.atual>= len(self.sprites):
+                    self.atual = 0
+                    self.animar=False
+                self.image= self.sprites[int(self.atual)]
+                self.image = pygame.transform.scale(self.image,(32*4,32*4))
 
     
-    def andar(self):
-        self.animar=True
-
-   
+    def andar(self, player):
+        if player == 1 or player == 2:
+            self.animar=True
+    
 
 class Bola(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
 
-        self.sprite = (pygame.image.load('imagens/bola mikasa (1).png'))
+        self.sprite = (pygame.image.load(sprites.BOLA))
         self.image = self.sprite
         self.image = pygame.transform.scale(self.image,(50,50))
         self.rect= self.image.get_rect()
         self.rect.midtop = (constantes.LARGURA//2, 250)
-    
-
-
-
-
 
 
 volei = Jogo()
