@@ -16,11 +16,13 @@ MARROM = (200, 20, 50)
 
 # Física do Jogo
 MOVIMENTO_LATERAL = 5
-GRAVIDADE = 0.2
+Y_GRAVIDADE = 0.2
 ALTURA_DO_SALTO = -9
+V_VELOCIDADE = ALTURA_DO_SALTO
 FORCA_DE_ATAQUE = -6
 VELOCIDADE_BOLA = 6
 VELOCIDADE_ATAQUE = 8
+pulando = False
 
 #frames
 FPS = 30
@@ -51,4 +53,4 @@ LARGURA_REDE = 10
 #mensagem_ganhador = None
 #ativaçao_jogo = True
 #tempo_tela_mensagem = 0
-#pergunta_final = False 
+#pergunta_final = False  
