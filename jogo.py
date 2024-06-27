@@ -179,7 +179,7 @@ class Jogador(pygame.sprite.Sprite):
     def andar(self):
         self.animar=True
 
-
+   
 
 class Bola(pygame.sprite.Sprite):
     def __init__(self):
