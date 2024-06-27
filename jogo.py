@@ -147,8 +147,6 @@ class Jogo:
     def mostrar_tela_final(self):
         pass
 
-
-
 volei = Jogo()
 volei.mostrar_tela_inicial()
 
