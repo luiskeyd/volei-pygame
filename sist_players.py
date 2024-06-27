@@ -1,0 +1,89 @@
+import pygame
+import sprites
+import constantes
+import sist_bola
+
+
+
+class Jogador(pygame.sprite.Sprite):
+    def __init__(self, player):
+        pygame.sprite.Sprite.__init__(self)
+        if player == 1:
+            self.sprites = []
+            
+            self.sprites.append(pygame.image.load(sprites.J1_FRAME_1))
+            self.sprites.append(pygame.image.load(sprites.J1_FRAME_2))
+            self.sprites.append(pygame.image.load(sprites.J1_FRAME_3))
+            self.sprites.append(pygame.image.load(sprites.J1_FRAME_4))
+
+            self.atual = 0
+            self.image = self.sprites[self.atual]
+            self.image = pygame.transform.scale(self.image,(120,120))
+            self.rect= self.image.get_rect()
+            self.rect.topleft = constantes.X_JOGADOR1, constantes.Y_JOGADOR1           
+            self.animar=False
+            self.posicao_x1 = constantes.X_JOGADOR1
+            self.rect.x = self.posicao_x1
+
+        else: 
+            self.sprites = []
+            self.sprites.append(pygame.image.load(sprites.J2_FRAME_1))
+            self.sprites.append(pygame.image.load(sprites.J2_FRAME_2))
+            self.sprites.append(pygame.image.load(sprites.J2_FRAME_3))
+            self.sprites.append(pygame.image.load(sprites.J2_FRAME_4))
+
+            self.atual = 0
+            self.image = self.sprites[self.atual]
+            self.image = pygame.transform.scale(self.image,(120, 120))
+            self.rect = self.image.get_rect()
+            self.rect.topright = 620, 430
+            self.animar = False
+            self.posicao_x2 = constantes.X_JOGADOR2
+            self.rect.x = self.posicao_x2
+            
+    def movimento(self, player):
+        teclas_pressionadas = pygame.key.get_pressed()
+        if player == 1:
+            if teclas_pressionadas[pygame.K_d]:
+                self.rect.x +=5
+                self.andar(1)
+            if teclas_pressionadas[pygame.K_a]:
+                self.rect.x -=5
+                self.andar(1)
+            if self.rect.x <= -25:
+                self.rect.x = -25
+        else:
+            if teclas_pressionadas[pygame.K_RIGHT]:
+                self.rect.x +=5
+                self.andar(2)
+            if teclas_pressionadas[pygame.K_LEFT]:
+                self.rect.x -=5
+                self.andar(2)
+            if self.rect.x >= constantes.LARGURA - 95:
+                self.rect.x = constantes.LARGURA - 95
+
+
+
+        
+    def update(self):
+            if self.animar==True:
+                self.atual= self.atual+ 0.2
+                if self.atual>= len(self.sprites):
+                    self.atual = 0
+                    self.animar=False
+                self.image= self.sprites[int(self.atual)]
+                self.image = pygame.transform.scale(self.image,(120,120))
+
+    
+    def andar(self, player):
+        if player == 1 or player == 2:
+            self.animar=True
+    
+
+    def colide(self, rede):
+        colisao = pygame.sprite.spritecollide(self, rede, False)
+        for i in colisao:
+                if self.rect.colliderect(i):
+                    self.rect.x -= 5
+                if self.rect.colliderect(i):
+                    self.rect.x +=10
