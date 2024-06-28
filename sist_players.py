@@ -163,4 +163,18 @@ class Jogador(pygame.sprite.Sprite):
 
         self.y_velocidade = self.altura_salto
         self.pulando = False
+
+
+    def ataque(self, bola, player):
+        pressionado = pygame.key.get_pressed()
+        if player == 1:   
+            if pressionado[pygame.K_f]:
+                if self.rect.topright > bola.rect.bottomleft and bola.rect.bottomleft > self.rect.midbottom: 
+                      bola.vel_x = 6
+                      self.rect.topright = bola.rect.bottomleft
+        if player == 2:
+            if pressionado[pygame.K_j]:
+                if self.rect.topleft < bola.rect.bottomright and bola.rect.bottomright < self.rect.midleft:
+                    bola.vel_x = -6
+                    self.rect.topleft = bola.rect.bottomright
         

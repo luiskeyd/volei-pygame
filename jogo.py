@@ -53,6 +53,8 @@ class Jogo:
             self.bola.movimento_bola()
             self.jogador1.pular(1)
             self.jogador2.pular(2)
+            self.jogador1.ataque(1)
+            self.jogador2.ataque(2)
             self.jogador1.colide(self.rede_sprite, self.bola_sprite)
             self.jogador2.colide(self.rede_sprite, self.bola_sprite)
             self.bola.verificar_colisao_jogador(self.jogador1)
@@ -168,11 +170,11 @@ class Jogo:
         
         if POSICAO[1] >= 547 and (POSICAO[0] > constantes.LARGURA /2):
             constantes.PLACAR_JOGADOR1 += 1
-            self.resetar_posicao()
+            self.resetar_posicao(1)
 
         elif POSICAO[1] >= 547 and (POSICAO[0] < constantes.LARGURA /2):
             constantes.PLACAR_JOGADOR2 += 1
-            self.resetar_posicao()
+            self.resetar_posicao(2)
         
 
 
@@ -195,12 +197,15 @@ class Jogo:
             self.jogando = False
 
 
-    def resetar_posicao(self):
+    def resetar_posicao(self, bola):
         pontuou = True
         if pontuou:
             self.jogador1.resetar_posicao_player(1)
             self.jogador2.resetar_posicao_player(2)
-            self.bola.resetar_posicao_bola()  
+            if bola == 1:
+                self.bola.resetar_posicao_bola1() 
+            if bola == 2:
+                self.bola.resetar_posicao_bola2()     
             pontuou = False
 
 

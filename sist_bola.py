@@ -19,8 +19,8 @@ class Bola(pygame.sprite.Sprite):
         self.posicao_inicial_bola_x = self.rect.x 
         self.posicao_inicial_bola_y = self.rect.y
         self.gravidade = constantes.Y_GRAVIDADE
-        self.vel_x = 5
-        self.vel_y = 5
+        self.vel_x = 6
+        self.vel_y = 6
         self.colidiu = False
 
     def gravidade_ativada(self):
