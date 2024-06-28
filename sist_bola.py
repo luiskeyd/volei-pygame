@@ -29,7 +29,7 @@ class Bola(pygame.sprite.Sprite):
         # Aplicando a colisão nas bordas da tela
         if self.rect.left <= 0:   # se o lado direito ou o lado esquerdo da bola chegar na borda
             self.rect.left = 5
-            self.vel_x = -abs(self.vel_x)
+            self.vel_x = abs(self.vel_x)
         if self.rect.right >= constantes.LARGURA:
             self.rect.right = constantes.LARGURA
             self.vel_x = -abs(self.vel_x)
