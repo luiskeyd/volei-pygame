@@ -35,7 +35,7 @@ class Jogo:
         self.bola_sprite.add(self.bola)
         self.todas_as_sprites.add(self.jogador1)
         self.todas_as_sprites.add(self.jogador2) # add de todas as sprites na lista
-        pygame.mixer_music.set_volume(0.5)
+        pygame.mixer_music.set_volume(0)
         pygame.mixer_music.load('audio/happy_adveture.mp3')
         pygame.mixer_music.play(-1)
         self.rodar()
@@ -58,7 +58,11 @@ class Jogo:
             self.bola.verificar_colisao_jogador(self.jogador2)
             self.bola.verificar_colisao_rede(self.rede)
             self.atualizar_sprites()
-            self.desenhar_sprites() 
+            self.desenhar_sprites()
+            self.verificador_win()
+
+
+
 
 
     def eventos(self):
@@ -68,6 +72,7 @@ class Jogo:
             if event.type == pygame.QUIT: 
                     self.jogando = False 
                     self.esta_rodando = False
+            
             
         
     def atualizar_sprites(self):
@@ -165,14 +170,25 @@ class Jogo:
         elif POSICAO[1] >= 547 and (POSICAO[0] < constantes.LARGURA /2):
             constantes.PLACAR_JOGADOR2 += 1
             self.resetar_posicao()
+        
 
+
+    def verificador_win(self):
+        vencedor = False
         if constantes.PLACAR_JOGADOR1 >= 12 and (constantes.PLACAR_JOGADOR1 - constantes.PLACAR_JOGADOR2 >= 2):
             constantes. PLACAR_JOGADOR1 = 0
             constantes. PLACAR_JOGADOR2 = 0
+            vencedor = True
+        
         if constantes.PLACAR_JOGADOR2 >= 12 and (constantes.PLACAR_JOGADOR2 - constantes.PLACAR_JOGADOR1 >= 2):
             constantes. PLACAR_JOGADOR1 = 0
             constantes. PLACAR_JOGADOR2 = 0
-        
+            vencedor = True
+
+        if vencedor:
+            self.mostrar_tela_final()
+            self.jogando = False
+
 
     def resetar_posicao(self):
         pontuou = True
@@ -184,17 +200,15 @@ class Jogo:
 
 
     def mostrar_tela_final(self):
+        self.tela.fill(constantes.BRANCO)
         if constantes.PLACAR_JOGADOR1 >= 12 and (constantes.PLACAR_JOGADOR1 - constantes.PLACAR_JOGADOR2 >= 2):
-            self.tela.fill(constantes.BRANCO)
-            self.mostrar_texto('JOGADOR 1 GANHOU', 34, constantes.VERMELHO, 500, 90)
-            self.tela.blit()
-            constantes. PLACAR_JOGADOR1 = 0            
-            constantes. PLACAR_JOGADOR2 = 0
-        elif constantes.PLACAR_JOGADOR2 >= 12 and (constantes.PLACAR_JOGADOR2 - constantes.PLACAR_JOGADOR1 >= 2):
-            self.mostrar_texto('JOGADOR 2 GANHOU', 34, constantes.AZUL, 500, 90)
-            self.tela.blit()
-            constantes. PLACAR_JOGADOR1 = 0
-            constantes. PLACAR_JOGADOR2 = 0
+                self.mostrar_texto('JOGADOR 1 GANHOU', 34, constantes.VERMELHO, 415, 230)
+                self.mostrar_texto('pressione espaço para reiniciar', 25, constantes.PRETO, 415, 270)
+        else:
+                self.mostrar_texto('JOGADOR 2 GANHOU', 34, constantes.AZUL, 415, 230)
+                self.mostrar_texto('pressione espaço para reiniciar', 25, constantes.PRETO, 415, 270)
+                pygame.display.flip()
+        self.esperar_resposta()
 
 
 
