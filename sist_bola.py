@@ -15,7 +15,9 @@ class Bola(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,(40,40))
         self.rect= self.image.get_rect()
         self.rect.x, self.rect.y = (constantes.LARGURA//2, 250)
-        self.rect.inflate_ip(-10, -10) 
+        self.rect.inflate_ip(-10, -10)
+        self.posicao_inicial_bola_x = self.rect.x 
+        self.posicao_inicial_bola_y = self.rect.y
         self.gravidade = constantes.Y_GRAVIDADE
         self.vel_x = 6
         self.vel_y = 2
@@ -64,7 +66,8 @@ class Bola(pygame.sprite.Sprite):
                 if self.rect.bottom > rede.rect.top and self.rect.top < rede.rect.top:
                      self.rect.bottom = rede.rect.top
                 elif self.rect.top < rede.rect.bottom and self.rect.bottom > rede.rect.bottom:
-                     self.rect.top = rede.rect.bottom                                              
+                     self.rect.top = rede.rect.bottom 
+
 
     def verificar_colisao_jogador(self, player):
         # isso é pra ver de qual lado a bola ta acertando o jogador
@@ -90,7 +93,12 @@ class Bola(pygame.sprite.Sprite):
 
 
     def atualizar_posicao(self):
-        return (self.rect.x, self.rect.y)      
+        return (self.rect.x, self.rect.y)  
+        
     
-    #def resetar_posicao(self):
-       # self.x = self.posicao_inicial
+    def resetar_posicao_bola(self):
+        self.rect.x = self.posicao_inicial_bola_x
+        self.rect.y = self.posicao_inicial_bola_y
+        self.vel_x = 6
+        self.vel_y = 2
+

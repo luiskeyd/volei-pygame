@@ -20,8 +20,11 @@ class Jogador(pygame.sprite.Sprite):
             self.image = self.sprites[self.atual]
             self.image = pygame.transform.scale(self.image,(120,120))
             self.rect = self.image.get_rect()
-            self.rect.topleft = constantes.X_JOGADOR1, constantes.Y_JOGADOR1 
-            self.rect.inflate_ip(-30, -5)          
+            self.rect.x, self.rect.y= constantes.X_JOGADOR1, constantes.Y_JOGADOR1 
+            self.rect.inflate_ip(-30, -5)
+            self.posicao_x_inicial_j1 = self.rect.x
+            self.posicao_y_inicial_j1 = self.rect.y 
+
             self.animar = False
             self.pulando = False         
             self.posicao_x1 = constantes.X_JOGADOR1
@@ -38,8 +41,11 @@ class Jogador(pygame.sprite.Sprite):
             self.image = self.sprites[self.atual]
             self.image = pygame.transform.scale(self.image,(120, 120))
             self.rect = self.image.get_rect()
-            self.rect.topright = constantes.X_JOGADOR2, constantes.Y_JOGADOR2
-            self.rect.inflate_ip(10, -5) 
+            self.rect.x, self.rect.y = constantes.X_JOGADOR2, constantes.Y_JOGADOR2
+            self.posicao_x_inicial_j2 = self.rect.x
+            self.posicao_y_inicial_j2 = self.rect.y
+            self.rect.inflate_ip(10, -5)
+
             self.animar = False
             self.pulando = False
             self.posicao_x2 = constantes.X_JOGADOR2
@@ -111,13 +117,19 @@ class Jogador(pygame.sprite.Sprite):
         pressionado = pygame.key.get_pressed()
         if player == 1:
             if pressionado[pygame.K_w]:
-                self.pulando = True             
+                self.pulando = True
+                # pygame.mixer_music.set_volume(0.5)
+                # pygame.mixer_music.load('audio/SFX_Jump_22.wav')
+                # pygame.mixer_music.play()            
             if self.pulando:               
                 self.rect.y -= self.y_velocidade
                 self.y_velocidade -= self.gravidade
                 if self.y_velocidade < -self.altura_salto:
                     self.pulando = False
                     self.y_velocidade = self.altura_salto
+            
+            
+           
         else:                
             if pressionado[pygame.K_UP]:
                 self.pulando = True               
@@ -126,7 +138,20 @@ class Jogador(pygame.sprite.Sprite):
                 self.y_velocidade -= self.gravidade
                 if self.y_velocidade < -self.altura_salto:
                     self.pulando = False
-                    self.y_velocidade = self.altura_salto                     
+                    self.y_velocidade = self.altura_salto 
 
-    
+                   
+
+    def resetar_posicao_player(self, player):
+        if player == 1:
+            self.rect.x = self.posicao_x_inicial_j1
+            self.rect.y = self.posicao_y_inicial_j1
+
+
+        else:
+            self.rect.x = self.posicao_x_inicial_j2
+            self.rect.y = self.posicao_y_inicial_j2
+
+        self.y_velocidade = self.altura_salto
+        self.pulando = False
         

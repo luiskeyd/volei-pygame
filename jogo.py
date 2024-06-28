@@ -35,6 +35,9 @@ class Jogo:
         self.bola_sprite.add(self.bola)
         self.todas_as_sprites.add(self.jogador1)
         self.todas_as_sprites.add(self.jogador2) # add de todas as sprites na lista
+        pygame.mixer_music.set_volume(0.5)
+        pygame.mixer_music.load('audio/happy_adveture.mp3')
+        pygame.mixer_music.play(-1)
         self.rodar()
 
 
@@ -56,6 +59,7 @@ class Jogo:
             self.bola.verificar_colisao_rede(self.rede)
             self.atualizar_sprites()
             self.desenhar_sprites() 
+
 
     def eventos(self):
         #define os eventos do jogo
@@ -97,6 +101,9 @@ class Jogo:
        self.imagem_de_fundo()
        #exibe o texto da tela inicial
        self.mostrar_texto('Pressione espaço para jogar', 32,constantes.BRANCO, constantes.LARGURA//2, constantes.ALTURA//2)
+       pygame.mixer_music.set_volume(0.5)
+       pygame.mixer_music.load('audio/8bit Bossa.mp3')
+       pygame.mixer_music.play()
        pygame.display.flip()
        self.esperar_resposta()
     
@@ -112,6 +119,11 @@ class Jogo:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         esperando = False
+                        pygame.mixer.music.stop()
+                        pygame.mixer.music.load('audio/Menu Selection Click.wav')
+                        pygame.mixer_music.play()
+
+
 
     def imagem_de_fundo(self):
         self.imagem_inicial = pygame.image.load(sprites.TELA_INICIAL)
@@ -119,6 +131,7 @@ class Jogo:
         self.rect = self.imagem_inicial.get_rect()
         self.rect.topleft = (0, 0)
         self.tela.blit(self.imagem_inicial, self.rect)
+
 
     def imagem_de_game_play(self):
         self.imagem_gameplay = pygame.image.load(sprites.TELA_DE_GAMEPLAY )
@@ -135,31 +148,48 @@ class Jogo:
         self.rect.midtop = (50,460)
         self.tela.blit(self.barrio, self.rect)
 
+
     def Placar(self, bola):
 
-        self.placar_jogador1 = constantes.PLACAR_JOGADOR1 
-        self.placar_jogador2 = constantes.PLACAR_JOGADOR2
         self.placar_exterior = pygame.draw.rect(self.tela,(constantes.PRETO), [233,50,400,100], 5)
         self.placar_interior = pygame.draw.rect(self.tela,(constantes.CINZA), [238,54,391,91], 0)
         self.mostrar_texto('PLACAR',30,constantes.PRETO, 435,60 )
-        self.mostrar_texto(f'{self.placar_jogador1}',45, constantes.VERMELHO,320, 95)
-        self.mostrar_texto(f'{self.placar_jogador2}',45, constantes.VERMELHO,550, 95)
+        self.mostrar_texto(f'{constantes.PLACAR_JOGADOR1}',45, constantes.VERMELHO,320, 95)
+        self.mostrar_texto(f'{constantes.PLACAR_JOGADOR2}',45, constantes.VERMELHO,550, 95)
         POSICAO = self.bola.atualizar_posicao()
-        PONTUOU = False
         
         if POSICAO[1] >= 547 and (POSICAO[0] > constantes.LARGURA /2):
             constantes.PLACAR_JOGADOR1 += 1
-            PONTUOU = True
-            
+            self.resetar_posicao()
+
         elif POSICAO[1] >= 547 and (POSICAO[0] < constantes.LARGURA /2):
-            constantes.PLACAR_JOGADOR2 += 1   
+            constantes.PLACAR_JOGADOR2 += 1
+            self.resetar_posicao()
+
+        if constantes.PLACAR_JOGADOR1 >= 12 and (constantes.PLACAR_JOGADOR1 - constantes.PLACAR_JOGADOR2 >= 2):
+            constantes. PLACAR_JOGADOR1= 0
+            constantes. PLACAR_JOGADOR2= 0
+        if constantes.PLACAR_JOGADOR2 >= 12 and (constantes.PLACAR_JOGADOR2 - constantes.PLACAR_JOGADOR1 >= 2):
+            constantes. PLACAR_JOGADOR1= 0
+            constantes. PLACAR_JOGADOR2= 0
         
-    #def resetar_posicao(self, jogador, bola):
-     #   self.x = self.posicao_inicial
-        
+
+    def resetar_posicao(self):
+        pontuou = True
+        if pontuou == True:
+            self.jogador1.resetar_posicao_player(1)
+            self.jogador2.resetar_posicao_player(2)
+            self.bola.resetar_posicao_bola()  
+            pontuou = False
+
 
     def mostrar_tela_final(self):
         pass
+
+
+
+
+
 
 volei = Jogo()
 volei.mostrar_tela_inicial()
