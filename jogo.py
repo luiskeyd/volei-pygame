@@ -33,7 +33,6 @@ class Jogo:
         self.rede = sist_rede.Rede(constantes.AZUL,10, constantes.TAMANHO_REDE, (constantes.LARGURA//2, 320))
         self.rede_sprite.add(self.rede)
         self.bola_sprite.add(self.bola)
-        #self.todas_as_sprites.add(self.bola)
         self.todas_as_sprites.add(self.jogador1)
         self.todas_as_sprites.add(self.jogador2) # add de todas as sprites na lista
         self.rodar()
@@ -47,13 +46,16 @@ class Jogo:
             self.eventos()
             self.jogador1.movimento(1)
             self.jogador2.movimento(2)
+            self.bola.movimento_bola()
             self.jogador1.pular(1)
             self.jogador2.pular(2)
             self.jogador1.colide(self.rede_sprite, self.bola_sprite)
             self.jogador2.colide(self.rede_sprite, self.bola_sprite)
-            self.bola.movimento_bola()
+            self.bola.verificar_colisao_jogador(self.jogador1)
+            self.bola.verificar_colisao_jogador(self.jogador2)
+            self.bola.verificar_colisao_rede(self.rede)
             self.atualizar_sprites()
-            self.desenhar_sprites()
+            self.desenhar_sprites() 
 
     def eventos(self):
         #define os eventos do jogo

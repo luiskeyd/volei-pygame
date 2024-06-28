@@ -29,10 +29,10 @@ FPS = 40
 
 #posiçao dos jogadores
 X_JOGADOR1 = 100
-Y_JOGADOR1 = 430
+Y_JOGADOR1 = 450
 
 X_JOGADOR2 = 620
-Y_JOGADOR2 = 430
+Y_JOGADOR2 = 450
 
 #fonte
 FONTE = 'arial'

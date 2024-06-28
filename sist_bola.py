@@ -1,4 +1,5 @@
 import pygame
+#import random
 import constantes
 import sprites
 import os
@@ -15,43 +16,73 @@ class Bola(pygame.sprite.Sprite):
         self.rect= self.image.get_rect()
         self.rect.midtop = (constantes.LARGURA//2, 250)
         self.gravidade = constantes.Y_GRAVIDADE
-        self.dx = # tu deve saber oq fazer
-        self.dy = # //
+        self.vel_x = 6
+        self.vel_y = 2
     
     def movimento_bola(self):
         # Aplicando a gravidade
-        self.rect.y += self.gravidade
+        self.vel_y += self.gravidade
         # Atualizando a posição
-        self.rect.x += self.dx
-        self.rect.y += self.dy
+        self.rect.x += self.vel_x
+        self.rect.y += self.vel_y
 
         # Aplicando a colisão nas bordas da tela
-        if self.rect.left <= 0 or self.rect.right >= constantes.LARGURA:  # se o lado direito ou o lado esquerdo da bola chegar na borda
-            self.dx = -self.dx # a bola vai voltar
+        if self.rect.left <= 0:   # se o lado direito ou o lado esquerdo da bola chegar na borda
+            self.rect.left = 5
+            self.vel_x = -abs(self.vel_x)
+        if self.rect.right >= constantes.LARGURA:
+            self.rect.right = constantes.LARGURA
+            self.vel_x = -abs(self.vel_x)
+         # a bola vai voltar
+
         if self.rect.top <= 0: #mesma coisa com o topo
-            self.dy = -self.dy
-        if self.rect.bottom <= constantes.ALTURA:
-            self.dy = -self.dy * 0.9 # isso vai reduzir a velocidade quando a bola quicar         
+            self.vel_y = -self.vel_y
+
+        elif self.rect.bottom >= constantes.ALTURA:
+            self.vel_y = -self.vel_y * 0.85 # isso vai reduzir a velocidade quando a bola quicar         
             self.rect.bottom = constantes.ALTURA # isso é pra bola não sair da tela
 
+# buguei todinho nesse codigo
+    
+    def verificar_colisao_rede(self, rede):
+            #isso é pra ver de qual lado a bola ta acertando a rede
+            if self.rect.colliderect(rede.rect):
+                if self.rect.right >= rede.rect.left and self.rect.left < rede.rect.left:
+                     self.vel_x = -abs(self.vel_x)
+                elif self.rect.left <= rede.rect.right and self.rect.right > rede.rect.right:
+                     self.vel_x = abs(self.vel_x)
+                if self.rect.bottom >= rede.rect.top and self.rect.top < rede.rect.top:
+                     self.vel_y = -abs(self.vel_y)
+                elif self.rect.top <= rede.rect.bottom and self.rect.bottom > rede.rect.bottom:
+                    self.vel_y = abs(self.vel_y)
 
-    def verificar_colisao(self, jogador):
+                if self.rect.right > rede.rect.left and self.rect.left < rede.rect.left:
+                     self.rect.right = rede.rect.left  
+                elif self.rect.left < rede.rect.right and self.rect.right > rede.rect.right:
+                     self.rect.left = rede.rect.right
+                if self.rect.bottom > rede.rect.top and self.rect.top < rede.rect.top:
+                     self.rect.bottom = rede.rect.top
+                elif self.rect.top < rede.rect.bottom and self.rect.bottom > rede.rect.bottom:
+                     self.rect.top = rede.rect.bottom                                              
+
+    def verificar_colisao_jogador(self, player):
         # isso é pra ver de qual lado a bola ta acertando o jogador
-        if self.rect.right >= jogador.rect.left and self.rect.left < jogador.rect.left:
-            self.dx = -abs(self.dx)
-        elif self.rect.left <= jogador.rect.right and self.rect.right > jogador.rect.right:
-            self.dx = abs(self.dx)
-        if self.rect.bottom >= jogador.rect.top and self.rect.top < jogador.rect.top:
-            self.dy = -abs(self.dy)
-        elif self.rect.top <= jogador.rect.bottom and self.rect.bottom > jogador.rect.bottom:
-            self.dy = abs(self.dy)
+        if self.rect.colliderect(player.rect):
+            if self.rect.right >= player.rect.left and self.rect.left < player.rect.left:
+                self.vel_x = -abs(self.vel_x)
+            elif self.rect.left <= player.rect.right and self.rect.right > player.rect.right:
+                self.vel_x = abs(self.vel_x)
+            if self.rect.bottom >= player.rect.top and self.rect.top < player.rect.top:
+                self.vel_y = -abs(self.vel_y)
+            elif self.rect.top <= player.rect.bottom and self.rect.bottom > player.rect.bottom:
+                self.vel_y = abs(self.vel_y)
 
-        # isso é pra não deixar a bola prender no jogador
-        if self.rect.right > jogador.rect.left and self.rect.left < jogador.rect.left:
-            self.rect.right = jogador.rect.left  
-        elif self.rect.left < jogador.rect.right and self.rect.right > jogador.rect.right:
-            self.rect.left = jogador.rect.right
-        if self.rect.bottom > jogador.rect.top and self.rect.top < jogador.rect.top:
-            self.rect.bottom = jogador.rect.top
-        elif self.rect.top < jogador.rect.bottom and self.rect.bottom > jogador.rect.bottom:
-            self.rect.top = jogador.rect.bottom                                              
+            # isso é pra não deixar a bola prender no jogador
+            if self.rect.right > player.rect.left and self.rect.left < player.rect.left:
+                self.rect.right = player.rect.left  
+            elif self.rect.left < player.rect.right and self.rect.right > player.rect.right:
+                self.rect.left = player.rect.right
+            if self.rect.bottom > player.rect.top and self.rect.top < player.rect.top:
+                self.rect.bottom = player.rect.top
+            elif self.rect.top < player.rect.bottom and self.rect.bottom > player.rect.bottom:
+                self.rect.top = player.rect.bottom                                              
