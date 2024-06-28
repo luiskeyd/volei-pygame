@@ -14,7 +14,8 @@ class Bola(pygame.sprite.Sprite):
         self.image = self.sprite
         self.image = pygame.transform.scale(self.image,(40,40))
         self.rect= self.image.get_rect()
-        self.rect.midtop = (constantes.LARGURA//2, 250)
+        self.rect.x, self.rect.y = (constantes.LARGURA//2, 250)
+        self.rect.inflate_ip(-10, -10) 
         self.gravidade = constantes.Y_GRAVIDADE
         self.vel_x = 6
         self.vel_y = 2
@@ -73,7 +74,7 @@ class Bola(pygame.sprite.Sprite):
             elif self.rect.left <= player.rect.right and self.rect.right > player.rect.right:
                 self.vel_x = abs(self.vel_x)
             if self.rect.bottom >= player.rect.top and self.rect.top < player.rect.top:
-                self.vel_y = -abs(self.vel_y)
+                self.vel_y = -abs(self.vel_y) 
             elif self.rect.top <= player.rect.bottom and self.rect.bottom > player.rect.bottom:
                 self.vel_y = abs(self.vel_y)
 
@@ -86,3 +87,10 @@ class Bola(pygame.sprite.Sprite):
                 self.rect.bottom = player.rect.top
             elif self.rect.top < player.rect.bottom and self.rect.bottom > player.rect.bottom:
                 self.rect.top = player.rect.bottom                                              
+
+
+    def atualizar_posicao(self):
+        return (self.rect.x, self.rect.y)      
+    
+    #def resetar_posicao(self):
+       # self.x = self.posicao_inicial

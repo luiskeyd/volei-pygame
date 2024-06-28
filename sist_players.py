@@ -20,7 +20,8 @@ class Jogador(pygame.sprite.Sprite):
             self.image = self.sprites[self.atual]
             self.image = pygame.transform.scale(self.image,(120,120))
             self.rect = self.image.get_rect()
-            self.rect.topleft = constantes.X_JOGADOR1, constantes.Y_JOGADOR1           
+            self.rect.topleft = constantes.X_JOGADOR1, constantes.Y_JOGADOR1 
+            self.rect.inflate_ip(-30, -5)          
             self.animar = False
             self.pulando = False         
             self.posicao_x1 = constantes.X_JOGADOR1
@@ -38,6 +39,7 @@ class Jogador(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image,(120, 120))
             self.rect = self.image.get_rect()
             self.rect.topright = constantes.X_JOGADOR2, constantes.Y_JOGADOR2
+            self.rect.inflate_ip(10, -5) 
             self.animar = False
             self.pulando = False
             self.posicao_x2 = constantes.X_JOGADOR2

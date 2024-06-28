@@ -76,7 +76,7 @@ class Jogo:
         self.tela.fill(constantes.PRETO) # limpa a tela
         self.imagem_de_game_play()# desenha a tela de funda da game play
         self.BARRIO() # desenha um 'BARRRRRIIIIIIIIIO'
-        self.Placar()
+        self.Placar(self.bola)
         self.bola_sprite.draw(self.tela)
         self.rede_sprite.draw(self.tela) # desenha a rede
         self.todas_as_sprites.draw(self.tela) #faz oq a função fala
@@ -135,7 +135,7 @@ class Jogo:
         self.rect.midtop = (50,460)
         self.tela.blit(self.barrio, self.rect)
 
-    def Placar(self):
+    def Placar(self, bola):
 
         self.placar_jogador1 = constantes.PLACAR_JOGADOR1 
         self.placar_jogador2 = constantes.PLACAR_JOGADOR2
@@ -144,8 +144,19 @@ class Jogo:
         self.mostrar_texto('PLACAR',30,constantes.PRETO, 435,60 )
         self.mostrar_texto(f'{self.placar_jogador1}',45, constantes.VERMELHO,320, 95)
         self.mostrar_texto(f'{self.placar_jogador2}',45, constantes.VERMELHO,550, 95)
+        POSICAO = self.bola.atualizar_posicao()
+        PONTUOU = False
         
-
+        if POSICAO[1] >= 547 and (POSICAO[0] > constantes.LARGURA /2):
+            constantes.PLACAR_JOGADOR1 += 1
+            PONTUOU = True
+            
+        elif POSICAO[1] >= 547 and (POSICAO[0] < constantes.LARGURA /2):
+            constantes.PLACAR_JOGADOR2 += 1   
+        
+    #def resetar_posicao(self, jogador, bola):
+     #   self.x = self.posicao_inicial
+        
 
     def mostrar_tela_final(self):
         pass
