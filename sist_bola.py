@@ -20,7 +20,7 @@ class Bola(pygame.sprite.Sprite):
         self.posicao_inicial_bola_y = self.rect.y
         self.gravidade = constantes.Y_GRAVIDADE
         self.vel_x = 6
-        self.vel_y = 2
+        self.vel_y = 3
     
     def movimento_bola(self):
         # Aplicando a gravidade
@@ -100,5 +100,5 @@ class Bola(pygame.sprite.Sprite):
         self.rect.x = self.posicao_inicial_bola_x
         self.rect.y = self.posicao_inicial_bola_y
         self.vel_x = 6
-        self.vel_y = 2
+        self.vel_y = 3
 

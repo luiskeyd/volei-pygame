@@ -167,16 +167,16 @@ class Jogo:
             self.resetar_posicao()
 
         if constantes.PLACAR_JOGADOR1 >= 12 and (constantes.PLACAR_JOGADOR1 - constantes.PLACAR_JOGADOR2 >= 2):
-            constantes. PLACAR_JOGADOR1= 0
-            constantes. PLACAR_JOGADOR2= 0
+            constantes. PLACAR_JOGADOR1 = 0
+            constantes. PLACAR_JOGADOR2 = 0
         if constantes.PLACAR_JOGADOR2 >= 12 and (constantes.PLACAR_JOGADOR2 - constantes.PLACAR_JOGADOR1 >= 2):
-            constantes. PLACAR_JOGADOR1= 0
-            constantes. PLACAR_JOGADOR2= 0
+            constantes. PLACAR_JOGADOR1 = 0
+            constantes. PLACAR_JOGADOR2 = 0
         
 
     def resetar_posicao(self):
         pontuou = True
-        if pontuou == True:
+        if pontuou:
             self.jogador1.resetar_posicao_player(1)
             self.jogador2.resetar_posicao_player(2)
             self.bola.resetar_posicao_bola()  
@@ -184,7 +184,17 @@ class Jogo:
 
 
     def mostrar_tela_final(self):
-        pass
+        if constantes.PLACAR_JOGADOR1 >= 12 and (constantes.PLACAR_JOGADOR1 - constantes.PLACAR_JOGADOR2 >= 2):
+            self.tela.fill(constantes.BRANCO)
+            self.mostrar_texto('JOGADOR 1 GANHOU', 34, constantes.VERMELHO, 500, 90)
+            self.tela.blit()
+            constantes. PLACAR_JOGADOR1 = 0            
+            constantes. PLACAR_JOGADOR2 = 0
+        elif constantes.PLACAR_JOGADOR2 >= 12 and (constantes.PLACAR_JOGADOR2 - constantes.PLACAR_JOGADOR1 >= 2):
+            self.mostrar_texto('JOGADOR 2 GANHOU', 34, constantes.AZUL, 500, 90)
+            self.tela.blit()
+            constantes. PLACAR_JOGADOR1 = 0
+            constantes. PLACAR_JOGADOR2 = 0
 
 
 
