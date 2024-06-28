@@ -220,4 +220,4 @@ volei.mostrar_tela_inicial()
 
 while volei.esta_rodando:
     volei.novo_jogo()
-    volei.mostrar_tela_final()
+    #volei.mostrar_tela_final()
