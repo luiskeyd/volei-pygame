@@ -51,6 +51,7 @@ class Jogo:
             self.jogador2.pular(2)
             self.jogador1.colide(self.rede_sprite, self.bola_sprite)
             self.jogador2.colide(self.rede_sprite, self.bola_sprite)
+            self.bola.movimento_bola()
             self.atualizar_sprites()
             self.desenhar_sprites()
 
