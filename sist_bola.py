@@ -14,20 +14,25 @@ class Bola(pygame.sprite.Sprite):
         self.image = self.sprite
         self.image = pygame.transform.scale(self.image,(40,40))
         self.rect= self.image.get_rect()
-        self.rect.x, self.rect.y = (constantes.LARGURA//2, 250)
+        self.rect.x, self.rect.y = (280, 260)
         self.rect.inflate_ip(-10, -10)
         self.posicao_inicial_bola_x = self.rect.x 
         self.posicao_inicial_bola_y = self.rect.y
         self.gravidade = constantes.Y_GRAVIDADE
-        self.vel_x = 6
-        self.vel_y = 3
-    
+        self.vel_x = 5
+        self.vel_y = 5
+        self.colidiu = False
+
+    def gravidade_ativada(self):
+        self.colidiu = True
+
     def movimento_bola(self):
         # Aplicando a gravidade
-        self.vel_y += self.gravidade
+        if self.colidiu == True:
+            self.vel_y += self.gravidade
         # Atualizando a posição
-        self.rect.x += self.vel_x
-        self.rect.y += self.vel_y
+            self.rect.x += self.vel_x
+            self.rect.y += self.vel_y
 
         # Aplicando a colisão nas bordas da tela
         if self.rect.left <= 0:   # se o lado direito ou o lado esquerdo da bola chegar na borda
@@ -71,7 +76,9 @@ class Bola(pygame.sprite.Sprite):
 
     def verificar_colisao_jogador(self, player):
         # isso é pra ver de qual lado a bola ta acertando o jogador
+        
         if self.rect.colliderect(player.rect):
+            self.gravidade_ativada()
             if self.rect.right >= player.rect.left and self.rect.left < player.rect.left:
                 self.vel_x = -abs(self.vel_x)
             elif self.rect.left <= player.rect.right and self.rect.right > player.rect.right:
@@ -96,9 +103,16 @@ class Bola(pygame.sprite.Sprite):
         return (self.rect.x, self.rect.y)  
         
     
-    def resetar_posicao_bola(self):
+    def resetar_posicao_bola1(self):
         self.rect.x = self.posicao_inicial_bola_x
         self.rect.y = self.posicao_inicial_bola_y
-        self.vel_x = 6
-        self.vel_y = 3
+        self.vel_x = 5
+        self.vel_y = 5
+        self.colidiu = False
 
+    def resetar_posicao_bola2(self):
+        self.rect.x = 530
+        self.rect.y = 260
+        self.vel_x = 5
+        self.vel_y = 5
+        self.colidiu = False

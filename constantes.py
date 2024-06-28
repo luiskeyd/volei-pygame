@@ -28,10 +28,10 @@ PULANDO = False
 FPS = 60
 
 #posiçao dos jogadores
-X_JOGADOR1 = 100
+X_JOGADOR1 = 20
 Y_JOGADOR1 = 450
 
-X_JOGADOR2 = 620
+X_JOGADOR2 = 690
 Y_JOGADOR2 = 450
 
 #fonte
