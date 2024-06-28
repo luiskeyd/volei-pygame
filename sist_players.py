@@ -54,8 +54,9 @@ class Jogador(pygame.sprite.Sprite):
         self.gravidade = 1
         self.altura_salto = 20
         self.y_velocidade = 20 
-         
-        #self.rect.y = constantes.Y_JOGADOR1 
+        self.som_pulo = pygame.mixer.Sound('audio/SFX_Jump_22.wav')
+        self.som_pulo.set_volume(0.3) 
+
             
     def movimento(self, player):
         teclas_pressionadas = pygame.key.get_pressed()
@@ -63,9 +64,11 @@ class Jogador(pygame.sprite.Sprite):
             if teclas_pressionadas[pygame.K_d]:
                 self.rect.x +=5
                 self.andar(1)
+
             if teclas_pressionadas[pygame.K_a]:
                 self.rect.x -=5
                 self.andar(1)
+
             if self.rect.x <= -25: # caso o jogador1 encoste na borda da tela
                 self.rect.x = -25
         else:
@@ -116,23 +119,29 @@ class Jogador(pygame.sprite.Sprite):
     def pular(self, player):
         pressionado = pygame.key.get_pressed()
         if player == 1:
-            if pressionado[pygame.K_w]:
+            if pressionado[pygame.K_w] and self.pulando == False:
                 self.pulando = True
-                # pygame.mixer_music.set_volume(0.5)
-                # pygame.mixer_music.load('audio/SFX_Jump_22.wav')
-                # pygame.mixer_music.play()            
-            if self.pulando:               
+                #pygame.mixer.Sound.set_volume(0.2)
+
+                self.som_pulo.play()         
+            if self.pulando:
+                              
                 self.rect.y -= self.y_velocidade
                 self.y_velocidade -= self.gravidade
+                
                 if self.y_velocidade < -self.altura_salto:
                     self.pulando = False
+                    
                     self.y_velocidade = self.altura_salto
+                    
             
             
            
         else:                
-            if pressionado[pygame.K_UP]:
-                self.pulando = True               
+            if pressionado[pygame.K_UP] and self.pulando == False:
+                self.pulando = True
+                #pygame.mixer.Sound.set_volume(0.2)
+                self.som_pulo.play()              
             if self.pulando:               
                 self.rect.y -= self.y_velocidade
                 self.y_velocidade -= self.gravidade

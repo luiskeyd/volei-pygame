@@ -37,10 +37,6 @@ Y_JOGADOR2 = 450
 #fonte
 FONTE = 'arial'
 
-# Fonte para usar nos textos
-#FONTE_MAIOR= pygame.font.Font(None, 74)
-#FONTE_MENOR = pygame.font.Font(None, 36)
-
 # Placar
 PLACAR_JOGADOR1 = 0
 PLACAR_JOGADOR2 = 0
@@ -49,8 +45,4 @@ PLACAR_JOGADOR2 = 0
 TAMANHO_REDE = 250
 LARGURA_REDE = 10
 
-
-#mensagem_ganhador = None
-#ativaçao_jogo = True
-#tempo_tela_mensagem = 0
-#pergunta_final = False  
+eita = 0 

@@ -24,6 +24,9 @@ class Jogo:
 
     def novo_jogo(self):
         #inicializacao das sprites
+        pygame.mixer_music.set_volume(0.1)
+        pygame.mixer_music.load('audio/happy_adveture.mp3')
+        pygame.mixer_music.play(-1)
         self.todas_as_sprites = pygame.sprite.Group() # carrega todas as sprites
         self.rede_sprite = pygame.sprite.Group()
         self.bola_sprite = pygame.sprite.Group()
@@ -35,9 +38,7 @@ class Jogo:
         self.bola_sprite.add(self.bola)
         self.todas_as_sprites.add(self.jogador1)
         self.todas_as_sprites.add(self.jogador2) # add de todas as sprites na lista
-        pygame.mixer_music.set_volume(0)
-        pygame.mixer_music.load('audio/happy_adveture.mp3')
-        pygame.mixer_music.play(-1)
+        
         self.rodar()
 
 
@@ -60,6 +61,7 @@ class Jogo:
             self.atualizar_sprites()
             self.desenhar_sprites()
             self.verificador_win()
+            
 
 
 
@@ -144,6 +146,7 @@ class Jogo:
         self.rect = self.imagem_gameplay.get_rect()
         self.rect.topleft = (0, 0)
         self.tela.blit(self.imagem_gameplay, self.rect)
+       
     
 
     def BARRIO(self):
@@ -178,11 +181,13 @@ class Jogo:
         if constantes.PLACAR_JOGADOR1 >= 12 and (constantes.PLACAR_JOGADOR1 - constantes.PLACAR_JOGADOR2 >= 2):
             constantes. PLACAR_JOGADOR1 = 0
             constantes. PLACAR_JOGADOR2 = 0
+            constantes.eita = 1
             vencedor = True
         
         if constantes.PLACAR_JOGADOR2 >= 12 and (constantes.PLACAR_JOGADOR2 - constantes.PLACAR_JOGADOR1 >= 2):
             constantes. PLACAR_JOGADOR1 = 0
             constantes. PLACAR_JOGADOR2 = 0
+            constantes.eita = 2
             vencedor = True
 
         if vencedor:
@@ -201,13 +206,13 @@ class Jogo:
 
     def mostrar_tela_final(self):
         self.tela.fill(constantes.BRANCO)
-        if constantes.PLACAR_JOGADOR1 >= 12 and (constantes.PLACAR_JOGADOR1 - constantes.PLACAR_JOGADOR2 >= 2):
+        if constantes.eita == 1:
                 self.mostrar_texto('JOGADOR 1 GANHOU', 34, constantes.VERMELHO, 415, 230)
                 self.mostrar_texto('pressione espaço para reiniciar', 25, constantes.PRETO, 415, 270)
         else:
                 self.mostrar_texto('JOGADOR 2 GANHOU', 34, constantes.AZUL, 415, 230)
                 self.mostrar_texto('pressione espaço para reiniciar', 25, constantes.PRETO, 415, 270)
-                pygame.display.flip()
+        pygame.display.flip()
         self.esperar_resposta()
 
 
