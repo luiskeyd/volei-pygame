@@ -25,7 +25,7 @@ VELOCIDADE_ATAQUE = 8
 PULANDO = False
 
 #frames
-FPS = 60
+FPS = 80
 
 #posiçao dos jogadores
 X_JOGADOR1 = 20

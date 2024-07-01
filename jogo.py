@@ -53,6 +53,11 @@ class Jogo:
             self.bola.movimento_bola()
             self.jogador1.pular(1)
             self.jogador2.pular(2)
+<<<<<<< HEAD
+=======
+            self.jogador1.ataque(self.bola, 1)
+            self.jogador2.ataque(self.bola, 2)
+>>>>>>> c7fb28085ab29e2b5ff7373c41b5740e08a2ac3d
             self.jogador1.colide(self.rede_sprite, self.bola_sprite)
             self.jogador2.colide(self.rede_sprite, self.bola_sprite)
             self.bola.verificar_colisao_jogador(self.jogador1)
