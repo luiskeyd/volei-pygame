@@ -171,10 +171,12 @@ class Jogador(pygame.sprite.Sprite):
             if pressionado[pygame.K_f]:
                 if self.rect.topright > bola.rect.bottomleft and bola.rect.bottomleft > self.rect.midbottom: 
                       bola.vel_x = 10
+                      bola.vel_y = -3
                       #self.rect.topright = bola.rect.bottomleft
         if player == 2:
             if pressionado[pygame.K_j]:
                 if self.rect.topleft < bola.rect.bottomright and bola.rect.bottomright < self.rect.midleft:
                     bola.vel_x = -10
+                    bola.vel_y = -3
                     #self.rect.topleft = bola.rect.bottomright
         
