@@ -1,7 +1,7 @@
 import pygame
 import constantes #pasta onde estarão as variaveis
 import sprites #imagens do jogo 
-import os # arquivos
+#import os # arquivos
 import sist_players
 import sist_bola
 import sist_rede

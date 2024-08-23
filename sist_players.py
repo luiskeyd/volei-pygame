@@ -52,8 +52,8 @@ class Jogador(pygame.sprite.Sprite):
             self.rect.x = self.posicao_x2
 
         self.gravidade = 1
-        self.altura_salto = 20
-        self.y_velocidade = 20 
+        self.altura_salto = 23
+        self.y_velocidade = 23
         self.som_pulo = pygame.mixer.Sound('audio/SFX_Jump_22.wav')
         self.som_pulo.set_volume(0.3) 
 
